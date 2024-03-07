@@ -8,11 +8,11 @@ public interface BoardDAO {
   
   List<BoardVO> findAll();
   
-  BoardVO selectOne();
+  BoardVO selectOne(int num);
   
   int update(BoardVO vo);
   
-  int delete(BoardVO vo);
+  int delete(int num);
   
 }
 

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import common.JdbcUtil;
@@ -31,14 +32,29 @@ public class BoardDAOImpl implements BoardDAO {
 			pstmt.setString(3,vo.getContent());
 			ret = pstmt.executeUpdate();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return ret;
 	}
 	
 	public List<BoardVO> findAll() {
-		List<BoardVO> ls = new ArrayList<BoardVO>();
+		List<BoardVO> ls = new ArrayList<>();
 		Connection conn = null ;
 		Statement stmt = null;
 		String q = "SELECT num, title ,writer ,content, regDate, cnt FROM board_table";
@@ -53,12 +69,11 @@ public class BoardDAOImpl implements BoardDAO {
 						rs.getString(2),
 						rs.getString(3),
 						rs.getString(4),
-						rs.getDate(5),
+						new Date(rs.getDate(5).getTime()),
 						rs.getInt(6));
 						ls.add(vo);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}finally {
 			
@@ -66,7 +81,6 @@ public class BoardDAOImpl implements BoardDAO {
 				try {
 					rs.close();
 				} catch (Exception e) {
-					// TODO: handle exception
 					e	.printStackTrace();
 				}
 			}
@@ -74,7 +88,6 @@ public class BoardDAOImpl implements BoardDAO {
 				try {
 					conn.close();
 				} catch (Exception e2) {
-					// TODO: handle exception
 					e2.printStackTrace();
 				}
 			}
@@ -82,21 +95,94 @@ public class BoardDAOImpl implements BoardDAO {
 		return ls;
 	}
 	
-
-	public BoardVO selectOne() { //상세조회
+	@Override
+	public BoardVO selectOne(int num) { //상세조회
+		Connection conn = null ;
+		PreparedStatement pstmt = null;
+		String q = "SELECT num, title ,writer ,content, regDate, cnt FROM board_table WHERE num =?";
+		ResultSet rs = null;
 		BoardVO vo = null;
+		try {
+			conn = ju.getConnection();
+			pstmt = conn.prepareStatement(q);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo = new BoardVO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						new Date(rs.getDate(5).getTime()) ,
+						rs.getInt(6));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e	.printStackTrace();
+				}
+			}
+			if(conn!= null) {
+				try {
+					conn.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			if(pstmt!= null) {
+				try {
+					pstmt.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+
+		}
 		return vo;
 	}
 
 
-	public int update(BoardVO vo) {
-		// TODO Auto-generated method stub
-		int result = -1;
-		return 0;
+	public int update(BoardVO vo) { //수정
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String q = "UPDATE board SET title=?, content=? where num=?";
+		int ret = -1;
+		try {
+			conn = ju.getConnection();
+			pstmt = conn.prepareStatement(q);
+			pstmt.setString(1,vo.getTitle());
+			pstmt.setString(2,vo.getContent());
+			pstmt.setInt(3,vo.getNumber());
+			ret = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return ret;
 	}
 
 
-	public int delete(BoardVO vo) {
+	public int delete(int num) {
 		// TODO Auto-generated method stub
 		int result = -1;
 		return 0;
