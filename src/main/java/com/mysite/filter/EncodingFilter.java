@@ -28,7 +28,7 @@ public class EncodingFilter extends HttpFilter implements Filter {
 	private String forceEncoding = "false";
 	
 	public void destroy() {
-		// TODO Auto-generated method stub
+
 	}
 
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 import common.JdbcUtil;
 
+// TODO:  BoardDAOImpl.java에서 반복되는 코드 리팩토링
 
 public class BoardDAOImpl implements BoardDAO {
 	

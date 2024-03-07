@@ -18,7 +18,7 @@
         삭제하시겠습니까? <br><br>
         <input type="submit" value="예">
         <a href="<c:url value="/board/boardDetail.jsp?num=<%=num%>"/>"><button>취소</button></a>
-
+        <!-- TODO: 삭제를 클릭할경우 [예] 버튼 하나에서 [아니오] 버튼 추가 -->
     </form>
 
 </body>

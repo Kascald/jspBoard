@@ -30,3 +30,4 @@ pageContext.setAttribute("vo", vo);
 	<a href="<c:url value="/board/deleteForm.jsp?num=${vo.num}"/>"><button>삭제</button></a>
   </body>
 </html>
+<!-- TODO: 상세보기 후 목록 보기 하면 리로드 하지 않아도 카운터 증가-->
