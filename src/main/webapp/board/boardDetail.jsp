@@ -1,10 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" import="com.mysite.board.*"%> <%@ taglib
-uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.mysite.board.*"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jsp:useBean id="dao" class="com.mysite.board.BoardDAOImpl" />
-<% int num = Integer.parseInt(request.getParameter("num")); BoardVO vo =
-dao.selectOne(num); pageContext.setAttribute("vo", vo); %>
+<% 
+request.setCharacterEncoding("UTF-8");
+int num = Integer.parseInt(request.getParameter("num")); 
+BoardVO vo = dao.selectOne(num);
+pageContext.setAttribute("vo", vo); 
+
+%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -19,5 +23,8 @@ dao.selectOne(num); pageContext.setAttribute("vo", vo); %>
     <p>내용:${vo.content}</p>
     <p>등록일자:${vo.regdate}</p>
     <p>조회수:${vo.cnt}</p>
+    <br>
+
+    <a href="<c:url value="/board/list.jsp"/>"><button>글 목록</button></a>	
   </body>
 </html>

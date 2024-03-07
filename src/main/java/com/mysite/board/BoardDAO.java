@@ -1,16 +1,17 @@
 package com.mysite.board;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface BoardDAO {
 	
-  int insert(BoardVO vo);
+  int insert(BoardVO vo) throws UnsupportedEncodingException;
   
-  List<BoardVO> findAll();
+  List<BoardVO> findAll() throws UnsupportedEncodingException;
   
-  BoardVO selectOne(int num);
+  BoardVO selectOne(int num) throws UnsupportedEncodingException;
   
-  int update(BoardVO vo);
+  int update(BoardVO vo) throws UnsupportedEncodingException;
   
   int delete(int num);
   

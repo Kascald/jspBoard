@@ -4,12 +4,14 @@ import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 public class BoardVO {
 	private int num; //index
 	private String title;

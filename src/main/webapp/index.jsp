@@ -19,7 +19,7 @@
 		
 		
 		<pre>
-			JSP 파일(/board/)
+   JSP 파일(/board/)
    - 메인 페이지(index.jsp)
      게시판 링크(목록 요청)
    - 게시글 목록(list.jsp)

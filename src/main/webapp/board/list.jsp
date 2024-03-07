@@ -4,9 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 
 <%
+
+    request.setCharacterEncoding("UTF-8");
 	BoardDAOImpl dao = new BoardDAOImpl();
 	List<BoardVO> ls = dao.findAll();
 	pageContext.setAttribute("ls", ls);
+	System.out.println(ls);
 %>
 <!DOCTYPE html>
 <html>
@@ -43,7 +46,7 @@
 		</table>
 		
 		<div>
-			<p><a href="<c:url value="/board/registForm.jsp"/>새글쓰기</a></p>
+			<a href="<c:url value="/board/registForm.jsp"/>"><button>글등록</button></a>	
 			<p><a href="#"></a></p>
 			<p><a href="#"></a></p>
 		</div>

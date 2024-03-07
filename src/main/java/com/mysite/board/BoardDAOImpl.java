@@ -1,11 +1,12 @@
 package com.mysite.board;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import common.JdbcUtil;
@@ -18,7 +19,7 @@ public class BoardDAOImpl implements BoardDAO {
 		ju = JdbcUtil.getInstance();
 	}
 	
-	public int insert(BoardVO vo) {
+	public int insert(BoardVO vo) throws UnsupportedEncodingException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String q = "INSERT INTO board(num , title , writer , content , regdate , cnt) values (board_seq.nextval , ? , ? , ?, sysdate , 0)";
@@ -52,11 +53,11 @@ public class BoardDAOImpl implements BoardDAO {
 		return ret;
 	}
 	
-	public List<BoardVO> findAll() {
+	public List<BoardVO> findAll() throws UnsupportedEncodingException {
 		List<BoardVO> ls = new ArrayList<>();
 		Connection conn = null ;
 		Statement stmt = null;
-		String q = "SELECT num, title, writer, content, regdate, cnt FROM board";
+		String q = "SELECT num, title, writer, content, regdate, cnt FROM board order by num desc";
 		ResultSet rs = null;
 		try {
 			conn = ju.getConnection();
@@ -95,7 +96,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public BoardVO selectOne(int num) { //상세조회
+	public BoardVO selectOne(int num) throws UnsupportedEncodingException { //상세조회
 		Connection conn = null ;
 		PreparedStatement pstmt = null;
 		String q = "SELECT num, title ,writer ,content, regdate, cnt FROM board WHERE num =?";
@@ -146,7 +147,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 
-	public int update(BoardVO vo) { //수정
+	public int update(BoardVO vo) throws UnsupportedEncodingException { //수정
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String q = "UPDATE board SET title=?, content=? where num=?";
@@ -184,7 +185,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public int delete(int num) {
 		// TODO Auto-generated method stub
 		int result = -1;
-		return 0;
+		return result;
 	}
 	
 
