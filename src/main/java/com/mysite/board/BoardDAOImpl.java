@@ -13,6 +13,7 @@ import common.JdbcUtil;
 
 
 public class BoardDAOImpl implements BoardDAO {
+	
 	private JdbcUtil ju;
 	
 	public BoardDAOImpl() {
@@ -109,12 +110,12 @@ public class BoardDAOImpl implements BoardDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				vo = new BoardVO(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getString(4),
-						new Date(rs.getDate(5).getTime()) ,
-						rs.getInt(6));
+						rs.getInt(1),	 //num
+						rs.getString(2), //title
+						rs.getString(3), //writer
+						rs.getString(4), //content
+						new Date(rs.getDate(5).getTime()) , //regdate
+						rs.getInt(6)+1); //cnt
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,7 +148,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 
-	public int update(BoardVO vo) throws UnsupportedEncodingException { //수정
+	@Override
+	public int update(BoardVO vo) throws UnsupportedEncodingException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String q = "UPDATE board SET title=?, content=? where num=?";
@@ -181,12 +183,76 @@ public class BoardDAOImpl implements BoardDAO {
 		return ret;
 	}
 
-
+	@Override
 	public int delete(int num) {
-		// TODO Auto-generated method stub
-		int result = -1;
-		return result;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String q = "DELETE FROM board where num=?";
+		int ret = -1;
+		try {
+			conn = ju.getConnection();
+			pstmt = conn.prepareStatement(q);
+			pstmt.setInt(1, num);
+			ret = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return ret;
 	}
 	
+
+
+	@Override
+	public int updateCnt(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String q = "UPDATE board SET cnt = cnt+1 where num =?";
+		int ret = -1;
+		try {
+			conn = ju.getConnection();
+			pstmt = conn.prepareStatement(q);
+			pstmt.setInt(1, num);
+			ret = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return ret;
+
+	}
+
 
 }

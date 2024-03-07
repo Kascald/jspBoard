@@ -13,6 +13,8 @@ public interface BoardDAO {
   
   int update(BoardVO vo) throws UnsupportedEncodingException;
   
+  int updateCnt(int num);
+
   int delete(int num);
   
 }
@@ -22,4 +24,5 @@ public interface BoardDAO {
 // 입력 (추가 insert() )
 // 게시글 보기( 하나만 불러오기 selectOne() )
 // 게시글 수정( Update )
+// 조회수 증가 (updateCnt)
 // 게시글 삭제( Delete ) -> 삭제 시 확인
