@@ -11,17 +11,17 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BoardVO {
-	private int number; //index
+	private int num; //index
 	private String title;
 	private String writer;
 	private String content;
-	private Date regDate;
-	private int viewCnt;
+	private Date regdate;
+	private int cnt;
 	
 	
 	@Override
 	public String toString() {
-		return "BoardVO || num = "+ number + "\ntitle = "+ title + "\nwriter = "+ writer + 
-							"\ncontent = "+ content + "\nregDate = " + regDate + "\nviewCount = "+ viewCnt +"\n";	
+		return "BoardVO || num = "+ num + "\ntitle = "+ title + "\nwriter = "+ writer + 
+							"\ncontent = "+ content + "\nregDate = " + regdate + "\nviewCount = "+ cnt +"\n";	
 	}
 }

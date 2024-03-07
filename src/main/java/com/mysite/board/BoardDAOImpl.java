@@ -21,8 +21,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public int insert(BoardVO vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String q = "INSERT INTO board(number , title , writer , content , regDate , viewCnt) values "
-				+ "(board_seq.nextval , ? , ? , ?, sysdate , 0)";
+		String q = "INSERT INTO board(num , title , writer , content , regdate , cnt) values (board_seq.nextval , ? , ? , ?, sysdate , 0)";
 		int ret = -1;
 		try {
 			conn = ju.getConnection();
@@ -57,7 +56,7 @@ public class BoardDAOImpl implements BoardDAO {
 		List<BoardVO> ls = new ArrayList<>();
 		Connection conn = null ;
 		Statement stmt = null;
-		String q = "SELECT num, title ,writer ,content, regDate, cnt FROM board_table";
+		String q = "SELECT num, title, writer, content, regdate, cnt FROM board";
 		ResultSet rs = null;
 		try {
 			conn = ju.getConnection();
@@ -99,7 +98,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public BoardVO selectOne(int num) { //상세조회
 		Connection conn = null ;
 		PreparedStatement pstmt = null;
-		String q = "SELECT num, title ,writer ,content, regDate, cnt FROM board_table WHERE num =?";
+		String q = "SELECT num, title ,writer ,content, regdate, cnt FROM board WHERE num =?";
 		ResultSet rs = null;
 		BoardVO vo = null;
 		try {
@@ -157,7 +156,7 @@ public class BoardDAOImpl implements BoardDAO {
 			pstmt = conn.prepareStatement(q);
 			pstmt.setString(1,vo.getTitle());
 			pstmt.setString(2,vo.getContent());
-			pstmt.setInt(3,vo.getNumber());
+			pstmt.setInt(3,vo.getNum());
 			ret = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

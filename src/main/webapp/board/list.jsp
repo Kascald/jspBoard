@@ -30,20 +30,20 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="list" items="${list}">
+				<c:forEach var="board" items="${ls}">
 				<tr>
-					<td>${list.num}</td>
-					<td><a href="/board/detail?num=${list.num}">${list.title}</a></td>
-					<td>${list.writer}</td>
-					<td>${list.regDate}</td>
-					<td>${list.viewCnt}</td>
+					<td>${board.num}</td>
+					<td><a href="${pageContext.request.contextPath}/board/boardDetail.jsp?num=${board.num}">${board.title}</a></td>
+					<td>${board.writer}</td>
+					<td>${board.regdate}</td>
+					<td>${board.cnt}</td>
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
 		
 		<div>
-			<p><a href="./registerForm.jsp">새글쓰기</a></p>
+			<p><a href="<c:url value="/board/registForm.jsp"/>새글쓰기</a></p>
 			<p><a href="#"></a></p>
 			<p><a href="#"></a></p>
 		</div>

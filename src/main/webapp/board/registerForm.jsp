@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>새글 등록</title>
 </head>
 <body>
-
+<form action="register.jsp" method="post"></form>
 </body>
 </html>

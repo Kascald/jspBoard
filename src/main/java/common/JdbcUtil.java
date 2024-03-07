@@ -24,7 +24,6 @@ public class JdbcUtil {
 
 		} catch (ClassNotFoundException e) {
 			  e.printStackTrace();
-			// TODO: handle exception
 		} catch (NamingException e) {
 			  e.printStackTrace();
 		}
