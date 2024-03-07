@@ -22,7 +22,7 @@
 		<h1>Board List</h1>
 		<a href="../index.jsp">메인으로 가기</a>
 
-		<table>
+		<table border="1">
 			<thead>
 				<tr>
 					<td>글번호</td>
