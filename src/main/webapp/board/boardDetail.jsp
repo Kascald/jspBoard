@@ -25,6 +25,8 @@ pageContext.setAttribute("vo", vo);
     <p>조회수:${vo.cnt}</p>
     <br>
 
-    <a href="<c:url value="/board/list.jsp"/>"><button>글 목록</button></a>	
+    <a href="<c:url value="/board/list.jsp"/>"><button>글 목록</button></a>
+    <a href="<c:url value="/board/editForm.jsp?num=${vo.num}"/>"><button>수정</button></a>
+	<a href="#"><button>삭제</button></a>
   </body>
 </html>

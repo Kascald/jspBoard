@@ -22,7 +22,7 @@
         <input type="text" name="title" value="${vo.title}" required><br>
         <input type="text" name="writer" value="${vo.writer}" required disabled><br>
         <textarea name="content" id="" cols="23" rows="4">${vo.content}</textarea><br>
-        <input type="button" value="수정">
+        <input type="submit" value="수정">
     </form>
 </body>
 </html>
