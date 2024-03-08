@@ -2,15 +2,15 @@ package com.mysite.board;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 import common.JdbcUtil;
-
 // TODO:  BoardDAOImpl.java에서 반복되는 코드 리팩토링
 
 public class BoardDAOImpl implements BoardDAO {
@@ -36,20 +36,9 @@ public class BoardDAOImpl implements BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+			Closing cls = new Closing(conn, pstmt);
+			cls.worked();
+			cls = null;
 		}
 		
 		return ret;
@@ -66,33 +55,14 @@ public class BoardDAOImpl implements BoardDAO {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(q);
 			while(rs.next()) {
-				BoardVO vo = new BoardVO(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getString(4),
-						new Date(rs.getDate(5).getTime()),
-						rs.getInt(6));
-						ls.add(vo);
+				ls.add(rsSetting(rs));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-			
-			if(rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e) {
-					e	.printStackTrace();
-				}
-			}
-			if(conn!= null) {
-				try {
-					conn.close();
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-			}
+			Closing cls = new Closing(conn, stmt, rs);
+			cls.worked();
+			cls = null;
 		}
 		return ls;
 	}
@@ -110,39 +80,15 @@ public class BoardDAOImpl implements BoardDAO {
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				vo = new BoardVO(
-						rs.getInt(1),	 //num
-						rs.getString(2), //title
-						rs.getString(3), //writer
-						rs.getString(4), //content
-						new Date(rs.getDate(5).getTime()) , //regdate
-						rs.getInt(6)+1); //cnt
+				updateCnt(num);
+				vo = rsSetting(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-			
-			if(rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e) {
-					e	.printStackTrace();
-				}
-			}
-			if(conn!= null) {
-				try {
-					conn.close();
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-			}
-			if(pstmt!= null) {
-				try {
-					pstmt.close();
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-			}
+			Closing cls = new Closing(conn, pstmt, rs);
+			cls.worked();
+			cls = null;
 
 		}
 		return vo;
@@ -165,20 +111,9 @@ public class BoardDAOImpl implements BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+			Closing cls = new Closing(conn, pstmt);
+			cls.worked();
+			cls = null;
 		}
 		
 		return ret;
@@ -198,22 +133,9 @@ public class BoardDAOImpl implements BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
+			Closing cls = new Closing(conn, pstmt);
+			cls.worked();
+			cls = null;
 		}
 		return ret;
 	}
@@ -234,26 +156,25 @@ public class BoardDAOImpl implements BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
+			Closing cls = new Closing(conn, pstmt);
+			cls.worked();
+			cls = null;
 		}
 		return ret;
 
 	}
 
+
+	private BoardVO rsSetting(ResultSet rs) throws SQLException {
+		BoardVO vo;
+		vo = new BoardVO(
+				rs.getInt(1),	 //num
+				rs.getString(2), //title
+				rs.getString(3), //writer
+				rs.getString(4), //content
+				new Date(rs.getDate(5).getTime()) , //regdate
+				rs.getInt(6)+1); //cnt
+		return vo;
+	}
 
 }
