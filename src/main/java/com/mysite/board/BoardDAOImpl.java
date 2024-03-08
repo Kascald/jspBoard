@@ -55,7 +55,7 @@ public class BoardDAOImpl implements BoardDAO {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(q);
 			while(rs.next()) {
-				ls.add(rsSetting(rs));
+				ls.add(rsSetting(rs,0));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +81,7 @@ public class BoardDAOImpl implements BoardDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				updateCnt(num);
-				vo = rsSetting(rs);
+				vo = rsSetting(rs,1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -165,7 +165,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 
-	private BoardVO rsSetting(ResultSet rs) throws SQLException {
+	private BoardVO rsSetting(ResultSet rs,int one) throws SQLException {
 		BoardVO vo;
 		vo = new BoardVO(
 				rs.getInt(1),	 //num
@@ -173,7 +173,7 @@ public class BoardDAOImpl implements BoardDAO {
 				rs.getString(3), //writer
 				rs.getString(4), //content
 				new Date(rs.getDate(5).getTime()) , //regdate
-				rs.getInt(6)+1); //cnt
+				rs.getInt(6)+ one); //cnt
 		return vo;
 	}
 

@@ -11,15 +11,17 @@
 
     <% 
         int num = Integer.parseInt(request.getParameter("num"));
+        pageContext.setAttribute("num",num);
     %>
 
     <form action="delete.jsp">
         <input type="hidden" value="<%=num%>" name="num">
         삭제하시겠습니까? <br><br>
         <input type="submit" value="예">
-        <a href="<c:url value="/board/boardDetail.jsp?num=<%=num%>"/>"><button>취소</button></a>
-        <!-- TODO: 삭제를 클릭할경우 [예] 버튼 하나에서 [아니오] 버튼 추가 -->
+   
     </form>
+     <a href="${pageContext.request.contextPath}/list.jsp"><button>취소</button></a>
+     <%-- FIXME: 취소버튼으로 뒤로가기 시 조회수가 같이 증가함!!! --%>
 
 </body>
 </html>

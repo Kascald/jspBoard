@@ -18,13 +18,24 @@ response.setHeader("Expires", "0"); // Proxies. */
     <meta charset="UTF-8" />
     <title>글내용</title>
   </head>
-<%-- 
-<script type="text/javascript">
+
+<%-- <script type="text/javascript">
+
+	<c:set var="board" scope="request" value="<%=vo%>"/>
+	<c:out value="${board}" />
+
+var nowCnt = document.querySelector("cnt");
+const articleNumber = document.querySelector("artnum");
+
+console.log(nowCnt);
+console.log(articleNumber);
+
 window.onpageshow = function(event) {
     if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
         // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
         // 이벤트 추가하는 곳
-       
+        localStorage.setItem('artNum',articleNumber);
+        localStorage.setItem('nowCnt',nowCnt);
 
         console.log('back button event');
     }
@@ -33,12 +44,12 @@ window.onpageshow = function(event) {
 
   <body>
     <h3>글 정보</h3>
-    <p>번호:${vo.num}</p>
-    <p>제목:${vo.title}</p>
-    <p>작성자:${vo.writer}</p>
-    <p>내용:${vo.content}</p>
-    <p>등록일자:${vo.regdate}</p>
-    <p>조회수:${vo.cnt}</p>
+    <p class = "artnum">번호:${vo.num}</p>
+    <p class = "title">제목:${vo.title}</p>
+    <p class = "writer">작성자:${vo.writer}</p>
+    <p class = "content">내용:${vo.content}</p>
+    <p class = "regdate">등록일자:${vo.regdate}</p>
+    <p class = "cnt">조회수:${vo.cnt}</p>
     <br>
 
     <a href="<c:url value="/board/list.jsp"/>"><button>글 목록</button></a>
@@ -49,4 +60,4 @@ window.onpageshow = function(event) {
 
 
 
-<!-- TODO: 상세보기 후 목록 보기 하면 리로드 하지 않아도 카운터 증가-->
+     <%-- FIXME: 브라우저의 뒤로가기 버튼 클릭시 조회수가 증가하지 않음!!! --%>

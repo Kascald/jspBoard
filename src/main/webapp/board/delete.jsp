@@ -9,7 +9,7 @@
     dao.delete(num);
 
 %>
-<c:redirect url="${pageContext.request.contextPath}/list.jsp"/>
+<c:redirect url="/board/list.jsp"/>
 
 <!DOCTYPE html>
 <html>
